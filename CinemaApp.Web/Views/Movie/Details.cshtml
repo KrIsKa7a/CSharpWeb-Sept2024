@@ -1,0 +1,12 @@
+﻿@using CinemaApp.Data.Models
+@model Movie
+
+<h2>@Model.Title</h2>
+
+<p><strong>Genre:</strong> @Model.Genre</p>
+<p><strong>Release Date:</strong> @Model.ReleaseDate.ToString("MMMM yyyy")</p>
+<p><strong>Duration:</strong> @Model.Duration minutes</p>
+<p><strong>Director:</strong> @Model.Director</p>
+<p><strong>Description:</strong> @Model.Description</p>
+
+<a asp-action="Index" class="btn btn-primary">Back to All Movies</a>

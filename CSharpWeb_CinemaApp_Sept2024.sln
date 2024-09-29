@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaApp.Web", "CinemaApp.Web\CinemaApp.Web.csproj", "{1919FE0B-DBC8-45DF-8A3C-4CB9A0A518D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaApp.Web.ViewModels", "CinemaApp.Web.ViewModels\CinemaApp.Web.ViewModels.csproj", "{525CBE6B-C38A-4B91-8CA4-2A9BD7072C79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaApp.Common", "CinemaApp.Common\CinemaApp.Common.csproj", "{E52A1E63-ABDB-43B2-8A9A-6DC1EB788A8F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaApp.Data.Models", "CinemaApp.Data.Models\CinemaApp.Data.Models.csproj", "{93ED5D40-42EC-4EBB-B1CC-9494B4CE577D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{FC05BEB0-DE24-4559-B484-208EECAD1290}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{CEC04932-57EB-40ED-BF9A-A5F28110C491}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaApp.Data", "CinemaApp.Data\CinemaApp.Data.csproj", "{47E989AB-4079-42CD-9996-8EC785B93B05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaApp.Web.Infrastructure", "CinemaApp.Web.Infrastructure\CinemaApp.Web.Infrastructure.csproj", "{A41CBB03-278E-4A2D-9FE5-6469FFD24B0A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1919FE0B-DBC8-45DF-8A3C-4CB9A0A518D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1919FE0B-DBC8-45DF-8A3C-4CB9A0A518D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1919FE0B-DBC8-45DF-8A3C-4CB9A0A518D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1919FE0B-DBC8-45DF-8A3C-4CB9A0A518D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{525CBE6B-C38A-4B91-8CA4-2A9BD7072C79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{525CBE6B-C38A-4B91-8CA4-2A9BD7072C79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{525CBE6B-C38A-4B91-8CA4-2A9BD7072C79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{525CBE6B-C38A-4B91-8CA4-2A9BD7072C79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E52A1E63-ABDB-43B2-8A9A-6DC1EB788A8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E52A1E63-ABDB-43B2-8A9A-6DC1EB788A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E52A1E63-ABDB-43B2-8A9A-6DC1EB788A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E52A1E63-ABDB-43B2-8A9A-6DC1EB788A8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93ED5D40-42EC-4EBB-B1CC-9494B4CE577D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93ED5D40-42EC-4EBB-B1CC-9494B4CE577D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93ED5D40-42EC-4EBB-B1CC-9494B4CE577D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93ED5D40-42EC-4EBB-B1CC-9494B4CE577D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47E989AB-4079-42CD-9996-8EC785B93B05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47E989AB-4079-42CD-9996-8EC785B93B05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47E989AB-4079-42CD-9996-8EC785B93B05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47E989AB-4079-42CD-9996-8EC785B93B05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A41CBB03-278E-4A2D-9FE5-6469FFD24B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A41CBB03-278E-4A2D-9FE5-6469FFD24B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A41CBB03-278E-4A2D-9FE5-6469FFD24B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A41CBB03-278E-4A2D-9FE5-6469FFD24B0A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1919FE0B-DBC8-45DF-8A3C-4CB9A0A518D1} = {FC05BEB0-DE24-4559-B484-208EECAD1290}
+		{525CBE6B-C38A-4B91-8CA4-2A9BD7072C79} = {FC05BEB0-DE24-4559-B484-208EECAD1290}
+		{93ED5D40-42EC-4EBB-B1CC-9494B4CE577D} = {CEC04932-57EB-40ED-BF9A-A5F28110C491}
+		{47E989AB-4079-42CD-9996-8EC785B93B05} = {CEC04932-57EB-40ED-BF9A-A5F28110C491}
+		{A41CBB03-278E-4A2D-9FE5-6469FFD24B0A} = {FC05BEB0-DE24-4559-B484-208EECAD1290}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5FFCB0BE-1D39-43EC-AB4A-F69EF33121EA}
+	EndGlobalSection
+EndGlobal

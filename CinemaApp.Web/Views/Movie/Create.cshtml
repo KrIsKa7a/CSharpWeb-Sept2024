@@ -1,0 +1,40 @@
+﻿@using CinemaApp.Web.ViewModels.Movie
+@model AddMovieInputModel
+
+<h2>Add a New Movie</h2>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label asp-for="Title">Movie Name</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Genre">Genre</label>
+        <input asp-for="Genre" class="form-control" />
+        <span asp-validation-for="Genre" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="ReleaseDate">Release Date</label>
+        <input asp-for="ReleaseDate" class="form-control" />
+        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Duration">Duration (minutes)</label>
+        <input asp-for="Duration" class="form-control" />
+        <span asp-validation-for="Duration" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Director">Director</label>
+        <input asp-for="Director" class="form-control" />
+        <span asp-validation-for="Director" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Description">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Create Movie</button>
+</form>
+
+<a asp-action="Index">Back to Movies List</a>

@@ -1,0 +1,33 @@
+﻿@using CinemaApp.Data.Models;
+@model IEnumerable<Movie>
+
+<h2>All Movies</h2>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Release Date</th>
+        <th>Duration</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Movie movie in Model)
+    {
+        <tr>
+            <td>@movie.Title</td>
+            <td>@movie.Genre</td>
+            <td>@movie.ReleaseDate.ToString("MMMM yyyy")</td>
+            <td>@movie.Duration minutes</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info">Details</a>
+                <a asp-action="AddToProgram" asp-route-id="@movie.Id" class="btn btn-info">Add to Program</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Add New Movie</a>
