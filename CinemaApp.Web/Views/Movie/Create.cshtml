@@ -34,6 +34,11 @@
         <textarea asp-for="Description" class="form-control"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
+    <div>
+        <label asp-for="ImageUrl">Image URL</label>
+        <input asp-for="ImageUrl" class="form-control"></input>
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
     <button type="submit" class="btn btn-primary mt-2">Create Movie</button>
 </form>
 

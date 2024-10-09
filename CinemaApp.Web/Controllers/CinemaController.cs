@@ -35,7 +35,9 @@
         }
 
         [HttpGet]
+#pragma warning disable CS1998
         public async Task<IActionResult> Create()
+#pragma warning restore CS1998
         {
             return this.View();
         }

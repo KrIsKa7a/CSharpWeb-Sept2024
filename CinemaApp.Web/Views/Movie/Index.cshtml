@@ -24,6 +24,14 @@
             <td>
                 <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info">Details</a>
                 <a asp-action="AddToProgram" asp-route-id="@movie.Id" class="btn btn-info">Add to Program</a>
+            
+                @if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    <form asp-controller="Watchlist" asp-action="AddToWatchlist" method="post" class="d-inline">
+                        <input type="hidden" name="movieId" value="@movie.Id" />
+                        <button type="submit" class="btn btn-warning">+Watchlist</button>
+                    </form>
+                }
             </td>
         </tr>
     }

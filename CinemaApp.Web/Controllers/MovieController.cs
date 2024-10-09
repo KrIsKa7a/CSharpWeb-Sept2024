@@ -32,7 +32,9 @@
         }
 
         [HttpGet]
+#pragma warning disable CS1998
         public async Task<IActionResult> Create()
+#pragma warning restore CS1998
         {
             return this.View();
         }
@@ -63,6 +65,7 @@
                 Director = inputModel.Director,
                 Duration = inputModel.Duration,
                 Description = inputModel.Description,
+                ImageUrl = inputModel.ImageUrl
             };
 
             await this.dbContext.Movies.AddAsync(movie);
@@ -177,7 +180,7 @@
                     return this.View(model);
                 }
 
-                CinemaMovie cinemaMovie = await this.dbContext
+                CinemaMovie? cinemaMovie = await this.dbContext
                     .CinemasMovies
                     .FirstOrDefaultAsync(cm => cm.MovieId == movieGuid &&
                                                cm.CinemaId == cinemaGuid);

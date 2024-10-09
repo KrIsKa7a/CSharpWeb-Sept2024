@@ -14,6 +14,8 @@
             public const int DirectorNameMaxLength = 80;
             public const int DescriptionMinLength = 50;
             public const int DescriptionMaxLength = 500;
+            public const int ImageUrlMinLength = 8;
+            public const int ImageUrlMaxLength = 2083;
         }
 
         public static class Cinema
