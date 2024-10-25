@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CinemaApp.Common\CinemaApp.Common.csproj" />
+    <ProjectReference Include="..\CinemaApp.Data.Models\CinemaApp.Data.Models.csproj" />
+    <ProjectReference Include="..\CinemaApp.Services.Mapping\CinemaApp.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

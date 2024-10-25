@@ -85,7 +85,9 @@ namespace CinemaApp.Web.Areas.Identity.Pages.Account
         }
 
 
+#pragma warning disable CS1998
         public async Task OnGetAsync(string returnUrl = null)
+#pragma warning restore CS1998
         {
             ReturnUrl = returnUrl;
         }

@@ -5,31 +5,26 @@
 
     using Data;
     using Data.Models;
+    using Services.Data.Interfaces;
     using ViewModels.Cinema;
     using ViewModels.Movie;
 
     public class CinemaController : BaseController
     {
         private readonly CinemaDbContext dbContext;
+        private readonly ICinemaService cinemaService;
 
-        public CinemaController(CinemaDbContext dbContext)
+        public CinemaController(CinemaDbContext dbContext, ICinemaService cinemaService)
         {
             this.dbContext = dbContext;
+            this.cinemaService = cinemaService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<CinemaIndexViewModel> cinemas = await this.dbContext
-                .Cinemas
-                .Select(c => new CinemaIndexViewModel()
-                {
-                    Id = c.Id.ToString(),
-                    Name = c.Name,
-                    Location = c.Location
-                })
-                .OrderBy(c => c.Location)
-                .ToArrayAsync();
+            IEnumerable<CinemaIndexViewModel> cinemas =
+                await this.cinemaService.IndexGetAllOrderedByLocationAsync();
 
             return this.View(cinemas);
         }

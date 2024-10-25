@@ -1,6 +1,9 @@
 ﻿namespace CinemaApp.Web.ViewModels.Cinema
 {
-    public class CinemaIndexViewModel
+    using Data.Models;
+    using Services.Mapping;
+
+    public class CinemaIndexViewModel : IMapFrom<Cinema>
     {
         public string Id { get; set; } = null!;
 

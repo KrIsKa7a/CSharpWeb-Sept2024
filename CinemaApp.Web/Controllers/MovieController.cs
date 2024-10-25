@@ -7,6 +7,7 @@
 
     using Data;
     using Data.Models;
+    using Data.Repository.Interfaces;
     using ViewModels.Cinema;
     using ViewModels.Movie;
 
@@ -15,10 +16,12 @@
     public class MovieController : BaseController
     {
         private readonly CinemaDbContext dbContext;
+        private IRepository<Movie, Guid> movieRepository;
 
-        public MovieController(CinemaDbContext dbContext)
+        public MovieController(CinemaDbContext dbContext, IRepository<Movie, Guid> movieRepository)
         {
             this.dbContext = dbContext;
+            this.movieRepository = movieRepository;
         }
 
         [HttpGet]

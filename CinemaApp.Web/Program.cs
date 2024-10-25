@@ -5,7 +5,13 @@ namespace CinemaApp.Web
 
     using Data;
     using Data.Models;
+    using Data.Repository;
+    using Data.Repository.Interfaces;
     using Infrastructure.Extensions;
+    using Services.Data;
+    using Services.Data.Interfaces;
+    using Services.Mapping;
+    using ViewModels;
 
     public class Program
     {
@@ -36,12 +42,16 @@ namespace CinemaApp.Web
                 cfg.LoginPath = "/Identity/Account/Login";
             });
 
+            builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
+            
+            builder.Services.AddScoped<ICinemaService, CinemaService>();
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
-            
-
             WebApplication app = builder.Build();
+            
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
             
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
