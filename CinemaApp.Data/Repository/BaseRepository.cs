@@ -1,5 +1,7 @@
 ﻿namespace CinemaApp.Data.Repository
 {
+    using System.Linq.Expressions;
+
     using Microsoft.EntityFrameworkCore;
 
     using Interfaces;
@@ -32,6 +34,22 @@
             return entity;
         }
 
+        public TType FirstOrDefault(Func<TType, bool> predicate)
+        {
+            TType entity = this.dbSet
+                .FirstOrDefault(predicate);
+
+            return entity;
+        }
+
+        public async Task<TType> FirstOrDefaultAsync(Expression<Func<TType, bool>> predicate)
+        {
+            TType entity = await this.dbSet
+                .FirstOrDefaultAsync(predicate);
+
+            return entity;
+        }
+
         public IEnumerable<TType> GetAll()
         {
             return this.dbSet.ToArray();
@@ -56,6 +74,18 @@
         public async Task AddAsync(TType item)
         {
             await this.dbSet.AddAsync(item);
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public void AddRange(TType[] items)
+        {
+            this.dbSet.AddRange(items);
+            this.dbContext.SaveChanges();
+        }
+
+        public async Task AddRangeAsync(TType[] items)
+        {
+            await this.dbSet.AddRangeAsync(items);
             await this.dbContext.SaveChangesAsync();
         }
 
@@ -97,7 +127,7 @@
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -113,7 +143,7 @@
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
