@@ -2,9 +2,12 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using Data.Models;
+    using Services.Mapping;
+
     using static Common.EntityValidationConstants.Cinema;
 
-    public class AddCinemaFormModel
+    public class AddCinemaFormModel : IMapTo<Cinema>
     {
         [Required]
         [MinLength(NameMinLength)]

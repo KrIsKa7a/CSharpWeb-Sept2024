@@ -8,6 +8,6 @@
 
         Task AddCinemaAsync(AddCinemaFormModel model);
 
-        Task<CinemaDetailsViewModel> GetCinemaDetailsByIdAsync(Guid id);
+        Task<CinemaDetailsViewModel?> GetCinemaDetailsByIdAsync(Guid id);
     }
 }

@@ -2,10 +2,15 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using AutoMapper;
+
+    using Data.Models;
+    using Services.Mapping;
+
     using static Common.EntityValidationConstants.Movie;
     using static Common.EntityValidationMessages.Movie;
 
-    public class AddMovieInputModel
+    public class AddMovieInputModel : IMapTo<Movie>, IHaveCustomMappings
     {
         public AddMovieInputModel()
         {
@@ -40,5 +45,11 @@
         
         [MaxLength(ImageUrlMaxLength)]
         public string? ImageUrl { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<AddMovieInputModel, Movie>()
+                .ForMember(d => d.ReleaseDate, x => x.Ignore());
+        }
     }
 }

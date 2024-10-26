@@ -1,6 +1,9 @@
 ﻿namespace CinemaApp.Web.ViewModels.Movie
 {
-    public class CinemaMovieViewModel
+    using Data.Models;
+    using Services.Mapping;
+
+    public class CinemaMovieViewModel : IMapFrom<Movie>
     {
         public string Title { get; set; } = null!;
 

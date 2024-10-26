@@ -1,5 +1,5 @@
-﻿@using CinemaApp.Data.Models;
-@model IEnumerable<Movie>
+﻿@using CinemaApp.Web.ViewModels.Movie
+@model IEnumerable<AllMoviesIndexViewModel>
 
 <h2>All Movies</h2>
 
@@ -14,12 +14,12 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (Movie movie in Model)
+        @foreach (AllMoviesIndexViewModel movie in Model)
     {
         <tr>
             <td>@movie.Title</td>
             <td>@movie.Genre</td>
-            <td>@movie.ReleaseDate.ToString("MMMM yyyy")</td>
+            <td>@movie.ReleaseDate</td>
             <td>@movie.Duration minutes</td>
             <td>
                 <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info">Details</a>

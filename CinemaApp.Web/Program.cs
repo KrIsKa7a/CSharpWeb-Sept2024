@@ -5,8 +5,6 @@ namespace CinemaApp.Web
 
     using Data;
     using Data.Models;
-    using Data.Repository;
-    using Data.Repository.Interfaces;
     using Infrastructure.Extensions;
     using Services.Data;
     using Services.Data.Interfaces;
@@ -43,7 +41,8 @@ namespace CinemaApp.Web
             });
 
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
-            
+            builder.Services.RegisterUserDefinedServices(typeof(IMovieService).Assembly);
+
             builder.Services.AddScoped<ICinemaService, CinemaService>();
 
             builder.Services.AddControllersWithViews();
