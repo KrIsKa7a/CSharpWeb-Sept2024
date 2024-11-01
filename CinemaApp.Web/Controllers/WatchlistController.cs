@@ -8,8 +8,7 @@
     using Services.Data.Interfaces;
     using System.Collections.Generic;
     using ViewModels.Watchlist;
-
-    using static Common.EntityValidationConstants.Movie;
+    
     using static Common.ErrorMessages.Watchlist;
 
     [Authorize]
@@ -19,7 +18,8 @@
         private readonly UserManager<ApplicationUser> userManager;
 
         public WatchlistController(IWatchlistService watchlistService, 
-            UserManager<ApplicationUser> userManager)
+            IManagerService managerService, UserManager<ApplicationUser> userManager)
+            : base(managerService)
         {
             this.watchlistService = watchlistService;
             this.userManager = userManager;
@@ -54,7 +54,7 @@
                 .AddMovieToUserWatchListAsync(movieId, userId);
             if (result == false)
             {
-                // TODO: Implement a way to transfer the Error Message to the View
+                TempData[nameof(AddToWatchListNotSuccessfullMessage)] = AddToWatchListNotSuccessfullMessage;
                 return this.RedirectToAction("Index", "Movie");
             }
 

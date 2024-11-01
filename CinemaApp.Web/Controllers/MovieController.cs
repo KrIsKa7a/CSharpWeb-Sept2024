@@ -1,27 +1,20 @@
 ﻿namespace CinemaApp.Web.Controllers
 {
-    using System.Globalization;
-
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-
-    using Data;
-    using Data.Models;
-    using Data.Repository.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
+    
     using Services.Data.Interfaces;
-    using ViewModels.Cinema;
     using ViewModels.Movie;
 
     using static Common.EntityValidationConstants.Movie;
 
     public class MovieController : BaseController
     {
-        private readonly CinemaDbContext dbContext;
         private readonly IMovieService movieService;
 
-        public MovieController(CinemaDbContext dbContext, IMovieService movieService)
+        public MovieController(IMovieService movieService, IManagerService managerService)
+            : base(managerService)
         {
-            this.dbContext = dbContext;
             this.movieService = movieService;
         }
 
@@ -35,16 +28,30 @@
         }
 
         [HttpGet]
+        [Authorize]
 #pragma warning disable CS1998
         public async Task<IActionResult> Create()
 #pragma warning restore CS1998
         {
+            bool isManager = await this.IsUserManagerAsync();
+            if (!isManager)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
             return this.View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(AddMovieInputModel inputModel)
         {
+            bool isManager = await this.IsUserManagerAsync();
+            if (!isManager)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
             if (!this.ModelState.IsValid)
             {
                 // Render the same form with user entered values + model errors 
@@ -85,8 +92,15 @@
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddToProgram(string? id)
         {
+            bool isManager = await this.IsUserManagerAsync();
+            if (!isManager)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
             Guid movieGuid = Guid.Empty;
             bool isGuidValid = this.IsGuidValid(id, ref movieGuid);
             if (!isGuidValid)
@@ -105,8 +119,15 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddToProgram(AddMovieToCinemaInputModel model)
         {
+            bool isManager = await this.IsUserManagerAsync();
+            if (!isManager)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);

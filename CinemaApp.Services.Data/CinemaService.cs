@@ -65,5 +65,24 @@
 
             return viewModel;
         }
+
+        public async Task<EditCinemaFormModel?> GetCinemaForEditByIdAsync(Guid id)
+        {
+            EditCinemaFormModel? cinemaModel = await this.cinemaRepository
+                .GetAllAttached()
+                .To<EditCinemaFormModel>()
+                .FirstOrDefaultAsync(c => c.Id.ToLower() == id.ToString().ToLower());
+
+            return cinemaModel;
+        }
+
+        public async Task<bool> EditCinemaAsync(EditCinemaFormModel model)
+        {
+            Cinema cinemaEntity = AutoMapperConfig.MapperInstance
+                .Map<EditCinemaFormModel, Cinema>(model);
+
+            bool result = await this.cinemaRepository.UpdateAsync(cinemaEntity);
+            return result;
+        }
     }
 }

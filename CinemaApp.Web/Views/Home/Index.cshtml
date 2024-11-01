@@ -1,4 +1,52 @@
-﻿<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
-<p>Explore our list of cinemas and movies.</p>
-<p>Add your favorites and track what you have watched.</p>
+﻿@{
+    ViewBag.Title = "Welcome to CinemaWebApp!";
+}
+
+<!-- Title Section -->
+<div class="container text-center my-5">
+    <h1 class="display-4">@ViewBag.Title</h1>
+    <p class="lead">Discover the best cinemas and movies tailored for your entertainment.</p>
+    <hr class="my-4">
+</div>
+
+<!-- Welcome Section -->
+<div class="bg-dark text-white text-center py-5">
+    <div class="container">
+        <h2 class="display-5 fw-bold">Your Gateway to the World of Cinema</h2>
+        <p class="mb-4">Find your favorite cinemas, explore top movies, and keep track of what you love.</p>
+        <a asp-controller="Cinema" asp-action="Index" class="btn btn-primary btn-lg mx-2">Explore Cinemas</a>
+        <a asp-controller="Movie" asp-action="Index" class="btn btn-secondary btn-lg mx-2">Browse Movies</a>
+    </div>
+</div>
+
+<!-- Featured Section -->
+<div class="container my-5">
+    <h3 class="text-center mb-4">Popular Choices</h3>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="card p-4 text-center">
+                <h5 class="card-title">Top Cinema of the Month</h5>
+                <p class="card-text">Experience the best movie-going environment in our top-rated cinema.</p>
+                <a asp-controller="Cinema" asp-action="Index" class="btn btn-primary">Explore Cinemas</a>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card p-4 text-center">
+                <h5 class="card-title">Must-Watch Movie</h5>
+                <p class="card-text">Catch the latest blockbuster that everyone’s talking about.</p>
+                <a asp-controller="Movie" asp-action="Index" class="btn btn-primary">Browse Movies</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container text-center">
+        <p>
+            Follow us on:
+            <a href="#" class="text-muted mx-1">Facebook</a> |
+            <a href="#" class="text-muted mx-1">Twitter</a> |
+            <a href="#" class="text-muted mx-1">Instagram</a>
+        </p>
+    </div>
+</div>

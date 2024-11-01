@@ -1,4 +1,8 @@
-﻿@using static CinemaApp.Common.ApplicationConstants
+﻿@using CinemaApp.Services.Data.Interfaces
+@using CinemaApp.Web.Infrastructure.Extensions
+@using static CinemaApp.Common.ApplicationConstants
+
+@inject IManagerService managerService
 @{
     int currentYear = DateTime.UtcNow.Year;
     string footerNote = (ReleaseYear == currentYear) ?
@@ -29,6 +33,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @if (this.User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            @if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="managerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Manager
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="managerDropdown">
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Cinema" asp-action="Manage">Manage Cinemas</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Movie" asp-action="Index">Manage Movies</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cinema" asp-action="Index">Cinemas</a>
                         </li>
@@ -55,7 +78,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @footerNote - CinemaWebApp
+            <p>&copy; @footerNote CinemaWebApp | Bringing Cinema and Movies to You</p>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

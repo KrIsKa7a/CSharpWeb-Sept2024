@@ -11,12 +11,6 @@ namespace CinemaApp.Web.Controllers
 
         public IActionResult Index()
         {
-            // Two ways of transmitting data from Controller to View
-            // 1. Using ViewData/ViewBag
-            // 2. Pass ViewModel to the View
-            ViewData["Title"] = "Home Page";
-            ViewData["Message"] = "Welcome to the Cinema Web App!";
-
             return View();
         }
     }
