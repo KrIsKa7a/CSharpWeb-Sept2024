@@ -59,7 +59,7 @@
         {
             Movie? movie = await this.movieRepository
                 .GetByIdAsync(id);
-            MovieDetailsViewModel? viewModel = null;
+            MovieDetailsViewModel? viewModel = new MovieDetailsViewModel();
             if (movie != null)
             {
                 AutoMapperConfig.MapperInstance.Map(movie, viewModel);
