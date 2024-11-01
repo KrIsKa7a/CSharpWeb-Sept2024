@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaApp.Web.Infrastructur
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{DB65FC70-11B0-46FB-94F0-A67A0EFDCE01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaApp.Services.Data", "CinemaApp.Services.Data\CinemaApp.Services.Data.csproj", "{36A72A5D-0E8F-4C0D-9829-10E932AF315B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaApp.Services.Data", "CinemaApp.Services.Data\CinemaApp.Services.Data.csproj", "{36A72A5D-0E8F-4C0D-9829-10E932AF315B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaApp.Services.Mapping", "CinemaApp.Services.Mapping\CinemaApp.Services.Mapping.csproj", "{805B514E-FDC2-4469-A3D0-3FD7D0B4920C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaApp.Services.Mapping", "CinemaApp.Services.Mapping\CinemaApp.Services.Mapping.csproj", "{805B514E-FDC2-4469-A3D0-3FD7D0B4920C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

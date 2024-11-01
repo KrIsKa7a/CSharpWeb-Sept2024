@@ -17,11 +17,11 @@
     {
         private readonly IRepository<Movie, Guid> movieRepository;
         private readonly IRepository<Cinema, Guid> cinemaRepository;
-        private readonly IRepository<CinemaMovie, Guid> cinemaMovieRepository;
+        private readonly IRepository<CinemaMovie, object> cinemaMovieRepository;
 
         public MovieService(IRepository<Movie, Guid> movieRepository, 
             IRepository<Cinema, Guid> cinemaRepository,
-            IRepository<CinemaMovie, Guid> cinemaMovieRepository)
+            IRepository<CinemaMovie, object> cinemaMovieRepository)
         {
             this.movieRepository = movieRepository;
             this.cinemaRepository = cinemaRepository;
