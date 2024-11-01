@@ -397,6 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-./CinemaApp.Web/appsettings.json
 /CinemaApp.Web/appsettings.Development.json
 /CinemaApp.Web/appsettings.json
