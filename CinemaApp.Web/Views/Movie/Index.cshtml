@@ -1,6 +1,12 @@
 ﻿@using CinemaApp.Web.ViewModels.Movie
 @model IEnumerable<AllMoviesIndexViewModel>
 
+@if (ViewData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData["ErrorMessage"]
+    </div>
+}
 <h2>All Movies</h2>
 
 <table class="table table-striped">

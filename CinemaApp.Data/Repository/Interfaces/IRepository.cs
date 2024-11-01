@@ -26,9 +26,9 @@
 
         Task AddRangeAsync(TType[] items);
 
-        bool Delete(TId id);
+        bool Delete(TType entity);
 
-        Task<bool> DeleteAsync(TId id);
+        Task<bool> DeleteAsync(TType entity);
 
         bool Update(TType item);
 

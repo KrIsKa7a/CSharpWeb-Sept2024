@@ -89,28 +89,16 @@
             await this.dbContext.SaveChangesAsync();
         }
 
-        public bool Delete(TId id)
+        public bool Delete(TType entity)
         {
-            TType entity = this.GetById(id);
-            if (entity == null)
-            {
-                return false;
-            }
-
             this.dbSet.Remove(entity);
             this.dbContext.SaveChanges();
 
             return true;
         }
 
-        public async Task<bool> DeleteAsync(TId id)
+        public async Task<bool> DeleteAsync(TType entity)
         {
-            TType entity = await this.GetByIdAsync(id);
-            if (entity == null)
-            {
-                return false;
-            }
-
             this.dbSet.Remove(entity);
             await this.dbContext.SaveChangesAsync();
 
