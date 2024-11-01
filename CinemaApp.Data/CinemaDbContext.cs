@@ -31,6 +31,8 @@
 
         public virtual DbSet<Ticket> Tickets { get; set; } = null!;
 
+        public virtual DbSet<Manager> Managers { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
