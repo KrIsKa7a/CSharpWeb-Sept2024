@@ -83,6 +83,7 @@
                         .GetAllAttached()
                         .Include(c => c.CinemaMovies)
                         .ThenInclude(cm => cm.Movie)
+                        .Where(c => c.IsDeleted == false)
                         .Select(c => new CinemaCheckBoxItemInputModel()
                         {
                             Id = c.Id.ToString(),
@@ -120,7 +121,7 @@
 
                 Cinema? cinema = await this.cinemaRepository
                     .GetByIdAsync(cinemaGuid);
-                if (cinema == null)
+                if (cinema == null || cinema.IsDeleted)
                 {
                     return false;
                 }

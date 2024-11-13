@@ -147,5 +147,57 @@
 
             return this.RedirectToAction(nameof(Details), "Cinema", new { id = formModel.Id });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string? id)
+        {
+            bool isManager = await this.IsUserManagerAsync();
+            if (!isManager)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Guid cinemaGuid = Guid.Empty;
+            if (!this.IsGuidValid(id, ref cinemaGuid))
+            {
+                return this.RedirectToAction(nameof(Manage));
+            }
+
+            DeleteCinemaViewModel? cinemaToDeleteViewModel =
+                await this.cinemaService.GetCinemaForDeleteByIdAsync(cinemaGuid);
+            if (cinemaToDeleteViewModel == null)
+            {
+                return this.RedirectToAction(nameof(Manage));
+            }
+
+            return this.View(cinemaToDeleteViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SoftDeleteConfirmed(DeleteCinemaViewModel cinema)
+        {
+            bool isManager = await this.IsUserManagerAsync();
+            if (!isManager)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Guid cinemaGuid = Guid.Empty;
+            if (!this.IsGuidValid(cinema.Id, ref cinemaGuid))
+            {
+                return this.RedirectToAction(nameof(Manage));
+            }
+
+            bool isDeleted = await this.cinemaService
+                .SoftDeleteCinemaAsync(cinemaGuid);
+            if (!isDeleted)
+            {
+                TempData["ErrorMessage"] =
+                    "Unexpected error occurred while trying to delete the cinema! Please contact system administrator!";
+                return this.RedirectToAction(nameof(Delete), new { id = cinema.Id });
+            }
+
+            return this.RedirectToAction(nameof(Manage));
+        }
     }
 }

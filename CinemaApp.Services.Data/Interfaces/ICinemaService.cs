@@ -13,5 +13,9 @@
         Task<EditCinemaFormModel?> GetCinemaForEditByIdAsync(Guid id);
 
         Task<bool> EditCinemaAsync(EditCinemaFormModel model);
+
+        Task<DeleteCinemaViewModel?> GetCinemaForDeleteByIdAsync(Guid id);
+
+        Task<bool> SoftDeleteCinemaAsync(Guid id);
     }
 }
