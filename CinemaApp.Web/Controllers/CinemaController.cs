@@ -149,6 +149,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Delete(string? id)
         {
             bool isManager = await this.IsUserManagerAsync();
@@ -174,6 +175,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> SoftDeleteConfirmed(DeleteCinemaViewModel cinema)
         {
             bool isManager = await this.IsUserManagerAsync();
