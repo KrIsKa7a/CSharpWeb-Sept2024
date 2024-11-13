@@ -52,14 +52,19 @@
             {
                 viewModel = new CinemaDetailsViewModel()
                 {
+                    Id = cinema.Id.ToString(),
                     Name = cinema.Name,
                     Location = cinema.Location,
                     Movies = cinema.CinemaMovies
                         .Where(cm => cm.IsDeleted == false)
                         .Select(cm => new CinemaMovieViewModel()
                         {
+                            Id = cm.Movie.Id.ToString(),
                             Title = cm.Movie.Title,
+                            Genre = cm.Movie.Genre,
                             Duration = cm.Movie.Duration,
+                            Description = cm.Movie.Description,
+                            AvailableTickets = cm.AvailableTickets
                         })
                         .ToArray()
                 };

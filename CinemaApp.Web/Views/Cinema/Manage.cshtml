@@ -1,22 +1,20 @@
 ﻿@using CinemaApp.Web.ViewModels.Cinema
 @model IEnumerable<CinemaIndexViewModel>
 
-@{
-    ViewData["Title"] = "Manage Cinemas";
-}
+<h2 class="my-4 text-center">Manage Cinemas</h2>
 
-<h2>Manage Cinemas</h2>
-
-<div class="mb-3">
-    <a asp-action="Create" class="btn btn-success">Add New Cinema</a>
+<div class="d-flex justify-content-end mb-4">
+    <a asp-action="Create" class="btn btn-success btn-lg">
+        <i class="bi bi-plus-circle"></i> Add New Cinema
+    </a>
 </div>
 
-<table class="table table-striped">
-    <thead>
+<table class="table table-hover table-bordered">
+    <thead class="table-dark">
     <tr>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Actions</th>
+        <th scope="col">Name</th>
+        <th scope="col">Location</th>
+        <th scope="col" class="text-center">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -25,10 +23,16 @@
         <tr>
             <td>@cinema.Name</td>
             <td>@cinema.Location</td>
-            <td>
-                <a asp-action="Details" asp-route-id="@cinema.Id" class="btn btn-info btn-sm">Details</a>
-                <a asp-action="Edit" asp-route-id="@cinema.Id" class="btn btn-primary btn-sm">Edit</a>
-                <a asp-action="Delete" asp-route-id="@cinema.Id" class="btn btn-danger btn-sm">Delete</a>
+            <td class="text-center">
+                <a asp-action="Details" asp-route-id="@cinema.Id" class="btn btn-primary btn-sm me-2">
+                    <i class="bi bi-pencil-square"></i> View Program
+                </a>
+                <a asp-action="Edit" asp-route-id="@cinema.Id" class="btn btn-warning btn-sm me-2">
+                    <i class="bi bi-pencil-square"></i> Edit
+                </a>
+                <a asp-action="Delete" asp-route-id="@cinema.Id" class="btn btn-danger btn-sm">
+                    <i class="bi bi-trash"></i> Delete
+                </a>
             </td>
         </tr>
     }

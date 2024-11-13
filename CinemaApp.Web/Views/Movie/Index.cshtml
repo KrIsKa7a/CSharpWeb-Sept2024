@@ -41,13 +41,6 @@
                         <input type="hidden" name="movieId" value="@movie.Id"/>
                         <button type="submit" class="btn btn-warning">+Watchlist</button>
                     </form>
-
-                    @if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()))
-                    {
-                        <a asp-action="AddToProgram" asp-route-id="@movie.Id" class="btn btn-info">Add to Program</a>
-                        <a asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-primary">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-danger">Delete</a>
-                    }
                 }
             </td>
         </tr>

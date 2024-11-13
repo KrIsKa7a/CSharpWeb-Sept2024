@@ -13,5 +13,9 @@
         Task<AddMovieToCinemaInputModel?> GetAddMovieToCinemaInputModelByIdAsync(Guid id);
 
         Task<bool> AddMovieToCinemasAsync(Guid movieId, AddMovieToCinemaInputModel model);
+
+        Task<EditMovieFormModel?> GetEditMovieFormModelByIdAsync(Guid id);
+
+        Task<bool> EditMovieAsync(EditMovieFormModel formModel);
     }
 }

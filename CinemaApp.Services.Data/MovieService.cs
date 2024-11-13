@@ -12,6 +12,7 @@
     using Web.ViewModels.Movie;
 
     using static Common.EntityValidationConstants.Movie;
+    using static Common.ApplicationConstants;
 
     public class MovieService : BaseService, IMovieService
     {
@@ -156,6 +157,51 @@
             await this.cinemaMovieRepository.AddRangeAsync(entitiesToAdd.ToArray());
 
             return true;
+        }
+
+        public async Task<EditMovieFormModel?> GetEditMovieFormModelByIdAsync(Guid id)
+        {
+            // TODO: Check soft delete
+            EditMovieFormModel? editMovieFormModel = await this.movieRepository
+                .GetAllAttached()
+                .To<EditMovieFormModel>()
+                .FirstOrDefaultAsync(m => m.Id.ToLower() == id.ToString().ToLower());
+            if (editMovieFormModel != null && 
+                editMovieFormModel.ImageUrl.Equals(NoImageUrl))
+            {
+                editMovieFormModel.ImageUrl = "No image";
+            }
+
+            return editMovieFormModel;
+        }
+
+        public async Task<bool> EditMovieAsync(EditMovieFormModel formModel)
+        {
+            Guid movieGuid = Guid.Empty;
+            if (!this.IsGuidValid(formModel.Id, ref movieGuid))
+            {
+                return false;
+            }
+
+            Movie edittedMovie = AutoMapperConfig.MapperInstance.Map<Movie>(formModel);
+            edittedMovie.Id = movieGuid;
+
+            bool isReleaseDateValid = DateTime.TryParseExact(formModel.ReleaseDate, ReleaseDateFormat,
+                CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime releaseDate);
+            if (!isReleaseDateValid)
+            {
+                return false;
+            }
+
+            edittedMovie.ReleaseDate = releaseDate;
+
+            if (formModel.ImageUrl == null ||
+                formModel.ImageUrl.Equals("No image"))
+            {
+                edittedMovie.ImageUrl = NoImageUrl;
+            }
+
+            return await this.movieRepository.UpdateAsync(edittedMovie);
         }
     }
 }

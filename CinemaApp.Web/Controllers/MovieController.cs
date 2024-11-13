@@ -7,6 +7,7 @@
     using ViewModels.Movie;
 
     using static Common.EntityValidationConstants.Movie;
+    using CinemaApp.Web.ViewModels.Cinema;
 
     public class MovieController : BaseController
     {
@@ -148,6 +149,76 @@
             }
 
             return this.RedirectToAction(nameof(Index), "Cinema");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(string? id)
+        {
+            bool isManager = await this.IsUserManagerAsync();
+            if (!isManager)
+            {
+                // TODO: Implement notifications for error and warning messages!
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Guid movieGuid = Guid.Empty;
+            bool isIdValid = this.IsGuidValid(id, ref movieGuid);
+            if (!isIdValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            EditMovieFormModel? formModel = await this.movieService
+                .GetEditMovieFormModelByIdAsync(movieGuid);
+            if (formModel == null)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            return this.View(formModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(EditMovieFormModel formModel)
+        {
+            bool isManager = await this.IsUserManagerAsync();
+            if (!isManager)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return this.View(formModel);
+            }
+
+            bool isUpdated = await this.movieService
+                .EditMovieAsync(formModel);
+            if (!isUpdated)
+            {
+                ModelState.AddModelError(string.Empty, "Unexpected error occurred while updating the cinema! Please contact administrator");
+                return this.View(formModel);
+            }
+
+            return this.RedirectToAction(nameof(Details), new { id = formModel.Id });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Manage()
+        {
+            bool isManager = await this.IsUserManagerAsync();
+            if (!isManager)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            IEnumerable<AllMoviesIndexViewModel> movies =
+                await this.movieService.GetAllMoviesAsync();
+
+            return this.View(movies);
         }
     }
 }

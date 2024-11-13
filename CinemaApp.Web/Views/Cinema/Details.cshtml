@@ -1,32 +1,73 @@
 ﻿@using CinemaApp.Web.ViewModels.Cinema;
-@using CinemaApp.Web.ViewModels.Movie;
+@using CinemaApp.Services.Data.Interfaces
+@using CinemaApp.Web.Infrastructure.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model CinemaDetailsViewModel
 
+@inject IManagerService managerService
+
 @{
-    ViewData["Title"] = "Cinema Movie Program";
+    ViewData["Title"] = "Cinema Program";
 }
 
-<h2>@Model.Name - Cinema Movie Program</h2>
+<h2 class="my-4 text-center display-4">Cinema Program - @Model.Name</h2>
+<p class="text-center lead"><strong>Location:</strong> @Model.Location</p>
 
-<p><strong>Location:</strong> @Model.Location</p>
+<div id="manageTicketsModalContainer">
+    <partial name="_ManageTicketsModal" model="Model.Movies"/>
+</div>
+<div class="container mt-5">
+    @if (Model.Movies.Any())
+    {
+        <div class="row">
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-center font-weight-bold">@movie.Title</h5>
+                            <p class="card-text text-muted text-center"><em>@movie.Genre</em></p>
+                            <p class="card-text"><strong>Duration:</strong> @movie.Duration</p>
+                            <p class="card-text text-justify" style="font-size: 0.9rem;">@movie.Description</p>
+                        </div>
+                        <div class="card-footer bg-transparent text-center">
+                            @if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()))
+                            {
+                                <button type="button" class="btn btn-primary btn-sm" onclick="openManageTicketsModal('@Model.Id')">
+                                    <i class="bi bi-ticket-perforated"></i> Manage Tickets
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-success btn-sm" onclick="buyTicketsModal('@Model.Id')">
+                                    <i class="bi bi-ticket-perforated"></i> Buy Tickets
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center text-muted">There are no movies scheduled for this cinema currently.</p>
+    }
+</div>
 
-<h3>Movies Currently Showing:</h3>
+<div class="text-center mt-5">
+    @if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()))
+    {
+        <a asp-action="Manage" class="btn btn-secondary btn-lg px-4">
+            <i class="bi bi-arrow-left-circle"></i> Back to Cinemas
+        </a>
+    }
+    else
+    {
+        <a asp-action="Index" class="btn btn-secondary btn-lg px-4">
+            <i class="bi bi-arrow-left-circle"></i> Back to Cinemas
+        </a>
+    }
+</div>
 
-@if (Model.Movies.Any())
-{
-    <ul class="list-group">
-        @foreach (CinemaMovieViewModel movie in Model.Movies)
-        {
-            <li class="list-group-item">
-                <strong>@movie.Title</strong> <br />
-                <small>Duration: @movie.Duration minutes</small>
-            </li>
-        }
-    </ul>
-}
-else
-{
-    <p>No movies are currently showing at this cinema.</p>
-}
-
-<a asp-action="Index" class="btn btn-secondary mt-3">Back to Cinemas</a>
+<script src="~/js/manageTickets.js"></script>
