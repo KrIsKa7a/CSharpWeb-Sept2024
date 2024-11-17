@@ -1,10 +1,9 @@
 ﻿namespace CinemaApp.WebApi.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Data.Interfaces;
-    using Web.Infrastructure.Extensions;
+    using Web.Infrastructure.Attributes;
     using Web.ViewModels.Cinema;
     using Web.ViewModels.CinemaMovie;
 
@@ -25,6 +24,7 @@
         }
 
         [HttpGet("[action]/{id?}")]
+        [ManagerOnly]
         [ProducesResponseType(typeof(CinemaDetailsViewModel),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -32,13 +32,6 @@
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetMoviesByCinema(string? id)
         {
-            // TODO: Implement WebAPI Authentication Scheme
-            /*bool isManager = await this.IsUserManagerAsync();
-            if (!isManager)
-            {
-                return this.Unauthorized();
-            }*/
-
             Guid cinemaGuid = Guid.Empty;
             if (!this.IsGuidValid(id, ref cinemaGuid))
             {
@@ -56,18 +49,13 @@
         }
 
         [HttpPost("[action]")]
+        [ManagerOnly]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateAvailableTickets([FromBody] SetAvailableTicketsViewModel model)
         {
-            /*bool isManager = await this.IsUserManagerAsync();
-            if (!isManager)
-            {
-                return this.Unauthorized();
-            }*/
-
             if (!ModelState.IsValid)
             {
                 return this.BadRequest(ModelState);
@@ -98,15 +86,6 @@
             }
 
             return true;
-        }
-
-        private async Task<bool> IsUserManagerAsync()
-        {
-            string? userId = this.User.GetUserId();
-            bool isManager = await this.managerService
-                .IsUserManagerAsync(userId);
-
-            return isManager;
         }
     }
 }

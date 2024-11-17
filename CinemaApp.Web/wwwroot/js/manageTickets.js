@@ -1,6 +1,9 @@
 ﻿// TODO: Reimplement using jQuery to smooth the implementation
 function openManageTicketsModal(cinemaId) {
-    fetch(`https://localhost:7081/TicketApi/GetMoviesByCinema/${cinemaId}`)
+    fetch(`https://localhost:7081/TicketApi/GetMoviesByCinema/${cinemaId}`, {
+        method: 'GET',
+        credentials: 'include'
+    })
         .then(response => response.json())
         .then(movies => {
             renderMoviesInModal(movies);
@@ -66,6 +69,7 @@ function updateAvailableTickets(movieId, cinemaId) {
 
     fetch('https://localhost:7081/TicketApi/UpdateAvailableTickets', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             CinemaId: cinemaId,

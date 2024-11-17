@@ -5,6 +5,8 @@
     using Infrastructure.Extensions;
     using Services.Data.Interfaces;
 
+    using static Common.ApplicationConstants;
+
     public class BaseController : Controller
     {
         protected readonly IManagerService managerService;
@@ -39,6 +41,13 @@
                 .IsUserManagerAsync(userId);
             
             return isManager;
+        }
+
+        protected async Task AppendUserCookieAsync()
+        {
+            bool isManager = await this.IsUserManagerAsync();
+
+            this.HttpContext.Response.Cookies.Append(IsManagerCookieName, isManager.ToString());
         }
     }
 }
