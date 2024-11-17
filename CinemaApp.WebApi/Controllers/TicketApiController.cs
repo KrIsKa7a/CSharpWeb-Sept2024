@@ -60,7 +60,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateAvailableTickets([FromForm] SetAvailableTicketsViewModel model)
+        public async Task<IActionResult> UpdateAvailableTickets([FromBody] SetAvailableTicketsViewModel model)
         {
             /*bool isManager = await this.IsUserManagerAsync();
             if (!isManager)
