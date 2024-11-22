@@ -6,21 +6,22 @@
     using Web.Infrastructure.Attributes;
     using Web.ViewModels.Cinema;
     using Web.ViewModels.CinemaMovie;
+    using Web.ViewModels.Ticket;
 
     [ApiController]
     [Route("[controller]/")]
     public class TicketApiController : ControllerBase
     {
-        private readonly IManagerService managerService;
         private readonly ICinemaService cinemaService;
         private readonly ITicketService ticketService;
+        private readonly IMovieService movieService;
 
-        public TicketApiController(IManagerService managerService, ICinemaService cinemaService,
-            ITicketService ticketService)
+        public TicketApiController(ICinemaService cinemaService,
+            ITicketService ticketService, IMovieService movieService)
         {
-            this.managerService = managerService;
             this.cinemaService = cinemaService;
             this.ticketService = ticketService;
+            this.movieService = movieService;
         }
 
         [HttpGet("[action]/{id?}")]
@@ -68,6 +69,34 @@
             }
 
             return this.Ok("Ticket availability updated successfully!");
+        }
+
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(AvailableTicketsViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetTicketsAvailability([FromBody] GetAvailableTicketsFormModel buyTicketsModel)
+        {
+            Guid cinemaGuid = Guid.Empty;
+            if (!this.IsGuidValid(buyTicketsModel.CinemaId, ref cinemaGuid))
+            {
+                return this.BadRequest();
+            }
+
+            Guid movieGuid = Guid.Empty;
+            if (!this.IsGuidValid(buyTicketsModel.MovieId, ref movieGuid))
+            {
+                return this.BadRequest();
+            }
+
+            AvailableTicketsViewModel? availableTicketsViewModel = await this.movieService
+                .GetAvailableTicketsByIdAsync(cinemaGuid, movieGuid);
+            if (availableTicketsViewModel == null)
+            {
+                return this.BadRequest();
+            }
+
+            return this.Ok(availableTicketsViewModel);
         }
 
         protected bool IsGuidValid(string? id, ref Guid parsedGuid)

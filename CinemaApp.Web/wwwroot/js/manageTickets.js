@@ -86,3 +86,27 @@ function updateAvailableTickets(movieId, cinemaId) {
         alert("An error occurred while updating tickets.");
     });
 }
+
+function buyTicketsModal(cinemaId, movieId) {
+    fetch(`https://localhost:7081/TicketApi/GetTicketsAvailability`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            CinemaId: cinemaId,
+            MovieId: movieId
+        })
+    })
+        .then(response => response.json())
+        .then(viewModel => {
+            $("#CinemaId").val(viewModel.cinemaId);
+            $("#MovieId").val(viewModel.movieId);
+            $("#Quantity").prop("min", "1");
+            $("#Quantity").prop("max", `${viewModel.availableTickets}`);
+            $("#AvailableTickets").val(viewModel.availableTickets);
+            $('#buyTicketModal').modal('show');
+        })
+        .catch(error => {
+            console.error("Error loading movies:", error);
+            alert("An error occurred while loading movies.");
+        });
+}

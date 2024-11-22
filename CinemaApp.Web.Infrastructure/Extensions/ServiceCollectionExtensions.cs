@@ -2,11 +2,12 @@
 {
     using System.Reflection;
 
+    using Microsoft.Extensions.DependencyInjection;
+
     using Data.Models;
     using Data.Repository;
     using Data.Repository.Interfaces;
-
-    using Microsoft.Extensions.DependencyInjection;
+    using Services.Data.Interfaces;
 
     public static class ServiceCollectionExtensions
     {
@@ -73,6 +74,35 @@
                 }
 
                 services.AddScoped(serviceInterfaceType, serviceType);
+            }
+        }
+
+        public static void RegisterUserDefinedServicesWebApi(this IServiceCollection services, Assembly serviceAssembly)
+        {
+            Type[] serviceInterfaceTypes = serviceAssembly
+                .GetTypes()
+                .Where(t => t.IsInterface)
+                .ToArray();
+            Type[] serviceTypes = serviceAssembly
+                .GetTypes()
+                .Where(t => !t.IsInterface && !t.IsAbstract &&
+                            t.Name.ToLower().EndsWith("service"))
+                .ToArray();
+
+            foreach (Type serviceInterfaceType in serviceInterfaceTypes)
+            {
+                if (serviceInterfaceType.Name != nameof(IUserService))
+                {
+                    Type? serviceType = serviceTypes
+                        .SingleOrDefault(t => "i" + t.Name.ToLower() == serviceInterfaceType.Name.ToLower());
+                    if (serviceType == null)
+                    {
+                        throw new NullReferenceException(
+                            $"Service type could not be obtained for the service {serviceInterfaceType.Name}");
+                    }
+
+                    services.AddScoped(serviceInterfaceType, serviceType);
+                }
             }
         }
     }

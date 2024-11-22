@@ -16,6 +16,10 @@
 <div id="manageTicketsModalContainer">
     <partial name="_ManageTicketsModal" model="Model.Movies"/>
 </div>
+<div id="buyTicketsModalContainer">
+    <partial name="_BuyTicketsModal" model="null"/>
+</div>
+
 <div class="container mt-5">
     @if (Model.Movies.Any())
     {
@@ -39,7 +43,7 @@
                             }
                             else
                             {
-                                <button type="button" class="btn btn-success btn-sm" onclick="buyTicketsModal('@Model.Id')">
+                                <button type="button" class="btn btn-success btn-sm" onclick="buyTicketsModal('@Model.Id', '@movie.Id')">
                                     <i class="bi bi-ticket-perforated"></i> Buy Tickets
                                 </button>
                             }

@@ -1,0 +1,31 @@
+﻿@model CinemaApp.Web.ViewModels.CinemaMovie.AvailableTicketsViewModel
+
+<div class="modal fade" id="buyTicketModal" tabindex="-1" role="dialog" aria-labelledby="buyTicketModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="buyTicketModalLabel">Buy Tickets</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="buyTicketForm" asp-controller="Ticket" asp-action="BuyTickets">
+                    <input type="hidden" asp-for="CinemaId" />
+                    <input type="hidden" asp-for="MovieId" />
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Number of Tickets</label>
+                        <input type="number" asp-for="Quantity" class="form-control" min="1" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Available tickets</label>
+                        <input type="number" asp-for="AvailableTickets" class="form-control" disabled="disabled" />
+                    </div>
+                    <div id="errorMessage" class="text-danger d-none"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="buyTicketButton" class="btn btn-primary">Buy Tickets</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -9,6 +9,7 @@
     [Authorize(Roles = AdminRoleName)]
     public class HomeController : Controller
     {
+        // TODO: Add actions so the user can submit Manager request and the Admin can approve this request
         public IActionResult Index()
         {
             return View();

@@ -9,6 +9,7 @@
     using Interfaces;
     using Mapping;
     using Web.ViewModels.Cinema;
+    using Web.ViewModels.CinemaMovie;
     using Web.ViewModels.Movie;
 
     using static Common.EntityValidationConstants.Movie;
@@ -202,6 +203,27 @@
             }
 
             return await this.movieRepository.UpdateAsync(edittedMovie);
+        }
+
+        public async Task<AvailableTicketsViewModel?> GetAvailableTicketsByIdAsync(Guid cinemaId, Guid movieId)
+        {
+            CinemaMovie? cinemaMovie = await this.cinemaMovieRepository
+                .FirstOrDefaultAsync(cm => cm.MovieId == movieId &&
+                                                     cm.CinemaId == cinemaId);
+
+            AvailableTicketsViewModel availableTicketsViewModel = null;
+            if (cinemaMovie != null)
+            {
+                availableTicketsViewModel = new AvailableTicketsViewModel()
+                {
+                    CinemaId = cinemaId.ToString(),
+                    MovieId = movieId.ToString(),
+                    Quantity = 0,
+                    AvailableTickets = cinemaMovie.AvailableTickets
+                };
+            }
+
+            return availableTicketsViewModel;
         }
     }
 }

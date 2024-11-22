@@ -1,5 +1,7 @@
 ﻿namespace CinemaApp.Services.Data.Interfaces
 {
+    using CinemaApp.Web.ViewModels.CinemaMovie;
+
     using Web.ViewModels.Movie;
 
     public interface IMovieService
@@ -17,5 +19,7 @@
         Task<EditMovieFormModel?> GetEditMovieFormModelByIdAsync(Guid id);
 
         Task<bool> EditMovieAsync(EditMovieFormModel formModel);
+
+        Task<AvailableTicketsViewModel?> GetAvailableTicketsByIdAsync(Guid cinemaId, Guid movieId);
     }
 }
