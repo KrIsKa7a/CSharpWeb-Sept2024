@@ -1,0 +1,47 @@
+﻿<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4 mb-4 text-primary">Welcome to the Admin Dashboard</h1>
+        <p class="lead mb-5 text-muted">Manage your application using the sections below:</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body d-flex flex-column align-items-center text-center">
+                    <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Manage Users</h5>
+                    <p class="card-text text-muted">Add, edit, or remove users and assign roles.</p>
+                    <a asp-area="Admin" asp-controller="UserManagement" asp-action="Index" class="btn btn-primary mt-auto w-100">
+                        Go to Users
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body d-flex flex-column align-items-center text-center">
+                    <i class="fas fa-film fa-3x text-secondary mb-3"></i>
+                    <h5 class="card-title">Manage Cinemas</h5>
+                    <p class="card-text text-muted">Create, update, and delete cinema entries.</p>
+                    <a asp-area="Admin" asp-controller="CinemaManagement" asp-action="Index" class="btn btn-secondary mt-auto w-100">
+                        Go to Cinemas
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body d-flex flex-column align-items-center text-center">
+                    <i class="fas fa-video fa-3x text-info mb-3"></i>
+                    <h5 class="card-title">Manage Movies</h5>
+                    <p class="card-text text-muted">Add new movies, edit details, or remove them.</p>
+                    <a asp-area="Admin" asp-controller="MovieManagement" asp-action="Index" class="btn btn-info mt-auto w-100">
+                        Go to Movies
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

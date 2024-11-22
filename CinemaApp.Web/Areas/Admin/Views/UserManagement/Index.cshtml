@@ -1,0 +1,68 @@
+﻿@using CinemaApp.Web.ViewModels.Admin.UserManagement
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@model IEnumerable<AllUsersViewModel>
+
+@inject RoleManager<IdentityRole<Guid>> roleManager
+
+@{
+    IEnumerable<string?> allRoles = await roleManager.Roles
+        .Select(r => r.Name)
+        .ToArrayAsync();
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">User Management</h1>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>
+                        @foreach (var role in user.Roles)
+                        {
+                            <span class="badge bg-secondary">@role</span>
+                        }
+                    </td>
+                    <td>
+                        <form method="post" asp-action="AssignRole" asp-controller="UserManagement" asp-area="Admin" class="d-inline">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <select name="role" class="form-select d-inline w-auto">
+                                @foreach (string role in allRoles)
+                                {
+                                    <option value="@role">@role</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm">Assign Role</button>
+                        </form>
+
+                        <form method="post" asp-action="RemoveRole" asp-controller="UserManagement" asp-area="Admin" class="d-inline ms-2">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <select name="role" class="form-select d-inline w-auto">
+                                @foreach (var role in user.Roles)
+                                {
+                                    <option value="@role">@role</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-warning btn-sm">Remove Role</button>
+                        </form>
+
+                        <form method="post" asp-action="DeleteUser" asp-controller="UserManagement" asp-area="Admin" class="d-inline ms-2">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
