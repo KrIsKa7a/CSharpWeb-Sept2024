@@ -2,12 +2,12 @@ namespace CinemaApp.WebApi
 {
     using Microsoft.EntityFrameworkCore;
 
-    using Data.Models;
-    using CinemaApp.Services.Data.Interfaces;
-    using Web.Infrastructure.Extensions;
     using Data;
+    using Data.Models;
+    using Services.Data.Interfaces;
     using Services.Mapping;
-    using CinemaApp.Web.ViewModels;
+    using Web.Infrastructure.Extensions;
+    using Web.ViewModels;
 
     public class Program
     {
@@ -15,6 +15,7 @@ namespace CinemaApp.WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
             string connectionString = builder.Configuration.GetConnectionString("SQLServer")!;
+            string? cinemaWebAppOrigin = builder.Configuration.GetValue<string>("Client Origins:CinemaWebApp");
 
             // Add services to the container.
             builder.Services
@@ -38,14 +39,17 @@ namespace CinemaApp.WebApi
                         .AllowAnyOrigin();
                 });
 
-                cfg.AddPolicy("AllowMyServer", policyBld =>
+                if (!String.IsNullOrWhiteSpace(cinemaWebAppOrigin))
                 {
-                    policyBld
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials()
-                        .WithOrigins("https://localhost:7015");
-                });
+                    cfg.AddPolicy("AllowMyServer", policyBld =>
+                    {
+                        policyBld
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .WithOrigins(builder.Configuration.GetValue<string>("Client Origins:CinemaWebApp"));
+                    });
+                }
             });
 
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
@@ -66,7 +70,10 @@ namespace CinemaApp.WebApi
 
             app.UseAuthorization();
 
-            app.UseCors("AllowMyServer");
+            if (!String.IsNullOrWhiteSpace(cinemaWebAppOrigin))
+            {
+                app.UseCors("AllowMyServer");
+            }
 
             app.MapControllers();
 
