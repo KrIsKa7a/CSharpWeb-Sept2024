@@ -47,7 +47,7 @@ namespace CinemaApp.WebApi
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                             .AllowCredentials()
-                            .WithOrigins(builder.Configuration.GetValue<string>("Client Origins:CinemaWebApp"));
+                            .WithOrigins(cinemaWebAppOrigin);
                     });
                 }
             });
