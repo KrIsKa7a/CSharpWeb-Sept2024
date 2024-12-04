@@ -7,6 +7,7 @@ namespace CinemaApp.Web
     using Data.Models;
     using Data.Seeding.DataTransferObjects;
     using Infrastructure.Extensions;
+    using Microsoft.AspNetCore.Mvc;
     using Services.Data.Interfaces;
     using Services.Mapping;
     using ViewModels;
@@ -48,7 +49,10 @@ namespace CinemaApp.Web
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.RegisterUserDefinedServices(typeof(IMovieService).Assembly);
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(cfg =>
+            {
+                cfg.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
             builder.Services.AddRazorPages();
 
             WebApplication app = builder.Build();
