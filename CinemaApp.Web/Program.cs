@@ -5,6 +5,7 @@ namespace CinemaApp.Web
 
     using Data;
     using Data.Models;
+    using Data.Seeding.DataTransferObjects;
     using Infrastructure.Extensions;
     using Services.Data.Interfaces;
     using Services.Mapping;
@@ -19,6 +20,8 @@ namespace CinemaApp.Web
             string adminEmail = builder.Configuration.GetValue<string>("Administrator:Email")!;
             string adminUsername = builder.Configuration.GetValue<string>("Administrator:Username")!;
             string adminPassword = builder.Configuration.GetValue<string>("Administrator:Password")!;
+            string jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
+                builder.Configuration.GetValue<string>("Seed:MoviesJson")!);
 
             // Add services to the container.
             builder.Services
@@ -50,7 +53,8 @@ namespace CinemaApp.Web
 
             WebApplication app = builder.Build();
             
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
+            AutoMapperConfig
+                .RegisterMappings(typeof(ErrorViewModel).Assembly, typeof(ImportMovieDto).Assembly);
             
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -71,7 +75,11 @@ namespace CinemaApp.Web
 
             app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
 
-            app.SeedAdministrator(adminEmail, adminUsername, adminPassword);
+            if (app.Environment.IsDevelopment())
+            {
+                app.SeedAdministrator(adminEmail, adminUsername, adminPassword);
+                app.SeedMovies(jsonPath);
+            }
 
             app.MapControllerRoute(
                 name: "Areas",

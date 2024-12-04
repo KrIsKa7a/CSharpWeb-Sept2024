@@ -16,35 +16,53 @@
 
 <table class="table table-striped">
     <thead>
-    <tr>
-        <th>Title</th>
-        <th>Genre</th>
-        <th>Release Date</th>
-        <th>Duration</th>
-        <th>Actions</th>
-    </tr>
+        <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Release Date</th>
+            <th>Duration</th>
+            <th>Actions</th>
+        </tr>
     </thead>
     <tbody>
         @foreach (AllMoviesIndexViewModel movie in Model)
-    {
-        <tr>
-            <td>@movie.Title</td>
-            <td>@movie.Genre</td>
-            <td>@movie.ReleaseDate</td>
-            <td>@movie.Duration minutes</td>
-            <td>
-                <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info">Details</a>
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(movie.ImageUrl))
+                    {
+                        <img src="@movie.ImageUrl" alt="@movie.Title" style="width: 100px; height: auto;" />
+                    }
+                    else
+                    {
+                        <span>No Image Available</span>
+                    }
+                </td>
+                <td>@movie.Title</td>
+                <td>@movie.Genre</td>
+                <td>@movie.ReleaseDate</td>
+                <td>@movie.Duration minutes</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info">Details</a>
 
-                @if (User?.Identity?.IsAuthenticated ?? false)
-                {
-                    <form asp-controller="Watchlist" asp-action="AddToWatchlist" method="post" class="d-inline">
-                        <input type="hidden" name="movieId" value="@movie.Id"/>
-                        <button type="submit" class="btn btn-warning">+Watchlist</button>
-                    </form>
-                }
-            </td>
-        </tr>
-    }
+                    @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <form asp-controller="Watchlist" asp-action="AddToWatchlist" method="post" class="d-inline">
+                            <input type="hidden" name="movieId" value="@movie.Id" />
+                            <button type="submit" class="btn btn-warning">+Watchlist</button>
+                        </form>
+
+                        @if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()))
+                        {
+                            <a asp-action="AddToProgram" asp-route-id="@movie.Id" class="btn btn-info">Add to Program</a>
+                            <a asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-primary">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-danger">Delete</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

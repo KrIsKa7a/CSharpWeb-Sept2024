@@ -1,6 +1,7 @@
 ﻿namespace CinemaApp.Web.ViewModels.Movie
 {
     using AutoMapper;
+
     using Data.Models;
     using Services.Mapping;
 
@@ -17,6 +18,8 @@
         public string Director { get; set; } = null!;
 
         public string Duration { get; set; } = null!;
+
+        public string? ImageUrl { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

@@ -7,7 +7,7 @@
 
     using Data;
     using Data.Models;
-
+    using Data.Seeding;
     using static Common.ApplicationConstants;
 
     public static class ApplicationBuilderExtensions
@@ -92,6 +92,21 @@
                 }
 
                 return app;
+            })
+                .GetAwaiter()
+                .GetResult();
+
+            return app;
+        }
+
+        public static IApplicationBuilder SeedMovies(this IApplicationBuilder app, string jsonPath)
+        {
+            using IServiceScope serviceScope = app.ApplicationServices.CreateAsyncScope();
+            IServiceProvider serviceProvider = serviceScope.ServiceProvider;
+
+            Task.Run(async () =>
+            {
+                await DbSeeder.SeedMoviesAsync(serviceProvider, jsonPath);
             })
                 .GetAwaiter()
                 .GetResult();
