@@ -7,7 +7,6 @@
     using ViewModels.Movie;
 
     using static Common.EntityValidationConstants.Movie;
-    using CinemaApp.Web.ViewModels.Cinema;
 
     public class MovieController : BaseController
     {
@@ -20,12 +19,24 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(AllMoviesSearchFilterViewModel inputModel)
         {
             IEnumerable<AllMoviesIndexViewModel> allMovies =
-                await this.movieService.GetAllMoviesAsync();
+                await this.movieService.GetAllMoviesAsync(inputModel);
+            int allMoviesCount = await this.movieService.GetMoviesCountByFilterAsync(inputModel);
+            AllMoviesSearchFilterViewModel viewModel = new AllMoviesSearchFilterViewModel
+            {
+                Movies = allMovies,
+                SearchQuery = inputModel.SearchQuery,
+                GenreFilter = inputModel.GenreFilter,
+                YearFilter = inputModel.YearFilter,
+                AllGenres = await this.movieService.GetAllGenresAsync(),
+                CurrentPage = inputModel.CurrentPage,
+                TotalPages = (int)Math.Ceiling((double)allMoviesCount / 
+                                               inputModel.EntitiesPerPage!.Value)
+            };
 
-            return this.View(allMovies);
+            return this.View(viewModel);
         }
 
         [HttpGet]
@@ -215,8 +226,9 @@
                 return this.RedirectToAction(nameof(Index));
             }
 
+            // TODO: Implement the same filtering, search and pagination here
             IEnumerable<AllMoviesIndexViewModel> movies =
-                await this.movieService.GetAllMoviesAsync();
+                await this.movieService.GetAllMoviesAsync(new AllMoviesSearchFilterViewModel());
 
             return this.View(movies);
         }

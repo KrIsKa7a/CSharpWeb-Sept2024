@@ -1,6 +1,7 @@
 ﻿namespace CinemaApp.Services.Data
 {
     using System.Globalization;
+    using System.Text.RegularExpressions;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -30,10 +31,55 @@
             this.cinemaMovieRepository = cinemaMovieRepository;
         }
 
-        public async Task<IEnumerable<AllMoviesIndexViewModel>> GetAllMoviesAsync()
+        public async Task<IEnumerable<AllMoviesIndexViewModel>> GetAllMoviesAsync(AllMoviesSearchFilterViewModel inputModel)
         {
-            return await movieRepository
-                .GetAllAttached()
+            IQueryable<Movie> allMoviesQuery = this.movieRepository
+                .GetAllAttached();
+
+            if (!String.IsNullOrWhiteSpace(inputModel.SearchQuery))
+            {
+                allMoviesQuery = allMoviesQuery
+                    .Where(m => m.Title.ToLower().Contains(inputModel.SearchQuery.ToLower()));
+            }
+
+            if (!String.IsNullOrWhiteSpace(inputModel.GenreFilter))
+            {
+                allMoviesQuery = allMoviesQuery
+                    .Where(m => m.Genre.ToLower() == inputModel.GenreFilter.ToLower());
+            }
+
+            if (!String.IsNullOrWhiteSpace(inputModel.YearFilter))
+            {
+                Match rangeMatch = Regex.Match(inputModel.YearFilter, YearFilterRangeRegex);
+                if (rangeMatch.Success)
+                {
+                    int startYear = int.Parse(rangeMatch.Groups[1].Value);
+                    int endYear = int.Parse(rangeMatch.Groups[2].Value);
+
+                    allMoviesQuery = allMoviesQuery
+                        .Where(m => m.ReleaseDate.Year >= startYear &&
+                                    m.ReleaseDate.Year <= endYear);
+                }
+                else
+                {
+                    bool isValidNumber = int.TryParse(inputModel.YearFilter, out int year);
+                    if (isValidNumber)
+                    {
+                        allMoviesQuery = allMoviesQuery
+                            .Where(m => m.ReleaseDate.Year == year);
+                    }
+                }
+            }
+
+            if (inputModel.CurrentPage.HasValue &&
+                inputModel.EntitiesPerPage.HasValue)
+            {
+                allMoviesQuery = allMoviesQuery
+                    .Skip(inputModel.EntitiesPerPage.Value * (inputModel.CurrentPage.Value - 1))
+                    .Take(inputModel.EntitiesPerPage.Value);
+            }
+
+            return await allMoviesQuery
                 .To<AllMoviesIndexViewModel>()
                 .ToArrayAsync();
         }
@@ -224,6 +270,33 @@
             }
 
             return availableTicketsViewModel;
+        }
+
+        public async Task<IEnumerable<string>> GetAllGenresAsync()
+        {
+            IEnumerable<string> allGenres = await this.movieRepository
+                .GetAllAttached()
+                .Select(m => m.Genre)
+                .Distinct()
+                .ToArrayAsync();
+
+            return allGenres;
+        }
+
+        public async Task<int> GetMoviesCountByFilterAsync(AllMoviesSearchFilterViewModel inputModel)
+        {
+            AllMoviesSearchFilterViewModel inputModelCopy = new AllMoviesSearchFilterViewModel()
+            {
+                CurrentPage = null,
+                EntitiesPerPage = null,
+                SearchQuery = inputModel.SearchQuery,
+                GenreFilter = inputModel.GenreFilter,
+                YearFilter = inputModel.YearFilter,
+            };
+
+            int moviesCount = (await this.GetAllMoviesAsync(inputModelCopy))
+                .Count();
+            return moviesCount;
         }
     }
 }

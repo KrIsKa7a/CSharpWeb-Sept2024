@@ -6,7 +6,7 @@
 
     public interface IMovieService
     {
-        Task<IEnumerable<AllMoviesIndexViewModel>> GetAllMoviesAsync();
+        Task<IEnumerable<AllMoviesIndexViewModel>> GetAllMoviesAsync(AllMoviesSearchFilterViewModel inputModel);
 
         Task<bool> AddMovieAsync(AddMovieInputModel inputModel);
 
@@ -21,5 +21,9 @@
         Task<bool> EditMovieAsync(EditMovieFormModel formModel);
 
         Task<AvailableTicketsViewModel?> GetAvailableTicketsByIdAsync(Guid cinemaId, Guid movieId);
+
+        Task<IEnumerable<string>> GetAllGenresAsync();
+
+        Task<int> GetMoviesCountByFilterAsync(AllMoviesSearchFilterViewModel inputModel);
     }
 }
