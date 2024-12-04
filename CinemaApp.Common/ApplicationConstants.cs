@@ -7,5 +7,10 @@
         public const string IsManagerCookieName = "IsManager";
 
         public const string AdminRoleName = "Admin";
+
+        public const string ErrorMessage = "ErrorMessage";
+        public const string WarningMessage = "WarningMessage";
+        public const string SuccessMessage = "SuccessMessage";
+        public const string InfoMessage = "InfoMessage";
     }
 }

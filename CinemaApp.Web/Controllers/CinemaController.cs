@@ -6,6 +6,8 @@
     using Services.Data.Interfaces;
     using ViewModels.Cinema;
 
+    using static CinemaApp.Common.ApplicationConstants;
+
     public class CinemaController : BaseController
     {
         private readonly ICinemaService cinemaService;
@@ -34,6 +36,7 @@
             bool isManager = await this.IsUserManagerAsync();
             if (!isManager)
             {
+                TempData[ErrorMessage] = "You must be a manager to create Cinemas!";
                 return this.RedirectToAction(nameof(Index));
             }
 
