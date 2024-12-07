@@ -1,0 +1,32 @@
+﻿body {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease-in-out;
+}
+
+.content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.btn-hover-effect {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-hover-effect:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.error-icon {
+    font-size: 6rem;
+    color: #dc3545;
+    margin-bottom: 1rem;
+}
