@@ -25,7 +25,7 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/CinemaApp.git
+   git clone https://github.com/KrIsKa7a/CSharpWeb-Sept2024.git
    ```
 
 2. Navigate to the project directory:
