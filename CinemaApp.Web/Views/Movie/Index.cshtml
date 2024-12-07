@@ -17,25 +17,47 @@
 <form method="get" asp-action="Index" class="mb-4">
     <div class="row">
         <div class="col">
-            <input asp-for="SearchQuery" class="form-control" placeholder="Search by title..." />
+            <div class="form-group">
+                <label asp-for="SearchQuery">Search by keyword</label>
+                <input asp-for="SearchQuery" class="form-control" placeholder="Search by title..."/>
+            </div>
         </div>
         <div class="col">
-            <select asp-for="GenreFilter" class="form-control">
-                @if (Model.AllGenres != null)
-                {
-                    <option value="">Filter by genre...</option>
-                    foreach (string genre in Model.AllGenres)
+            <div class="form-group">
+                <label asp-for="GenreFilter">Filter by genre</label>
+                <select asp-for="GenreFilter" class="form-control">
+                    @if (Model.AllGenres != null)
                     {
-                        <option value="@genre">@genre</option>
+                        <option value="">Reset genre filter</option>
+                        foreach (string genre in Model.AllGenres)
+                        {
+                            <option value="@genre">@genre</option>
+                        }
                     }
-                }
-            </select>
+                </select>
+            </div>
         </div>
         <div class="col">
-            <input asp-for="YearFilter" class="form-control"placeholder="Filter by year..." />
+            <div class="form-group">
+                <label asp-for="YearFilter">Filter by year or year range</label>
+                <input asp-for="YearFilter" class="form-control" placeholder="Filter by year..."/>
+            </div>
         </div>
         <div class="col">
-            <button type="submit" class="btn btn-primary">Filter</button>
+            <div class="form-group">
+                <label asp-for="EntitiesPerPage">Show Movies per page</label>
+                <select asp-for="EntitiesPerPage" class="form-control">
+                    @for (int i = 5; i <= 30; i += 5)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col col d-flex align-items-end">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
         </div>
     </div>
 </form>
@@ -112,7 +134,8 @@
                    asp-route-currentPage="@(Model.CurrentPage - 1)"
                    asp-route-searchQuery="@Model.SearchQuery"
                    asp-route-genreFilter="@Model.GenreFilter"
-                   asp-route-yearFilter="@Model.YearFilter">
+                   asp-route-yearFilter="@Model.YearFilter"
+                   asp-route-entitiesPerPage="@Model.EntitiesPerPage">
                     Previous
                 </a>
             </li>
@@ -125,7 +148,8 @@
                    asp-route-currentPage="@i"
                    asp-route-searchQuery="@Model.SearchQuery"
                    asp-route-genreFilter="@Model.GenreFilter"
-                   asp-route-yearFilter="@Model.YearFilter">
+                   asp-route-yearFilter="@Model.YearFilter"
+                   asp-route-entitiesPerPage="@Model.EntitiesPerPage">
                     @i
                 </a>
             </li>
@@ -138,7 +162,8 @@
                    asp-route-currentPage="@(Model.CurrentPage + 1)"
                    asp-route-searchQuery="@Model.SearchQuery"
                    asp-route-genreFilter="@Model.GenreFilter"
-                   asp-route-yearFilter="@Model.YearFilter">
+                   asp-route-yearFilter="@Model.YearFilter"
+                   asp-route-entitiesPerPage="@Model.EntitiesPerPage">
                     Next
                 </a>
             </li>

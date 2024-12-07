@@ -32,6 +32,7 @@
                 YearFilter = inputModel.YearFilter,
                 AllGenres = await this.movieService.GetAllGenresAsync(),
                 CurrentPage = inputModel.CurrentPage,
+                EntitiesPerPage = inputModel.EntitiesPerPage,
                 TotalPages = (int)Math.Ceiling((double)allMoviesCount / 
                                                inputModel.EntitiesPerPage!.Value)
             };
